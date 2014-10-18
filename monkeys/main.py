@@ -1,6 +1,6 @@
 
 import argparse
-from monkeyrunner import MonkeyRunner
+from monkeyhorde import MonkeyHorde
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Monkey runner')
@@ -8,5 +8,5 @@ if __name__ == '__main__':
                         dest='config_file', help='configuration file')
     args = parser.parse_args()
 
-    runner = MonkeyRunner(args.config_file)
+    runner = MonkeyHorde(args.config_file)
     runner.unleash()
