@@ -18,3 +18,6 @@ class Monkey(object):
             for label in labels.split(","):
                 groups[label].append(ip)
         return groups
+
+    def get_all_ips(self):
+        return [ip for ip, _ in self.config.items("vms")]

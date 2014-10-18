@@ -1,6 +1,4 @@
 
-import logging
-import ConfigParser
 import argparse
 from monkeyrunner import MonkeyRunner
 

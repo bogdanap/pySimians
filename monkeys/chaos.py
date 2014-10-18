@@ -1,4 +1,7 @@
 import os
+import random
+
+import cmd_runner
 from supermonkey import Monkey
 
 class ChaosMonkey(Monkey):
@@ -12,9 +15,14 @@ class ChaosMonkey(Monkey):
         return [f for f in os.listdir(SCRIPT_DIR) if
                 os.path.isfile(os.path.join(SCRIPT_DIR, f))]
 
-    def unleash(self):
-        pass
+    def time_of_the_monkey(self):
+        """Create some chaos"""
+        if not self.should_run():
+            return
+        chaos = random.choice(self.chaos_type)
+        vm = random.choice(self.get_all_ips())
+
 
     def should_run(self):
-        pass
+        return True
 
