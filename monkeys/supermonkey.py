@@ -13,6 +13,8 @@ class Monkey():
         groups = defaultdict(list)
         for vm in self.config.items("vms"):
             ip, labels = vm
+            if not labels:
+                labels = "no_label"
             for label in labels.split(","):
                 groups[label].append(ip)
         return groups
