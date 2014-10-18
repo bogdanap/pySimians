@@ -36,5 +36,8 @@ class ChaosMonkey(Monkey):
         if self.last_run and datetime.datetime.now() - datetime.timedelta(
                 hours=cooloff) < self.last_run:
             return False
+        probability = float(self.config.get("chaos", "probability"))
+        if random.random() > probability:
+            return False
         return True
 
