@@ -22,6 +22,6 @@ if __name__=='__main__':
 	runner.connect(username='ubuntu')
 	runner.run("uptime")
 
-	runner = ScriptRunner('127.0.0.1')
-	runner.connect(username='ioana', password='kernel')
-	runner.run("uptime")
+	# runner = ScriptRunner('127.0.0.1')
+	# runner.connect(username='ioana', password='...')
+	# runner.run("uptime")
