@@ -2,7 +2,10 @@ import datetime
 import os
 import random
 
+from scriptrunner import ScriptRunner
 from supermonkey import Monkey
+
+
 
 class ChaosMonkey(Monkey):
 
@@ -17,16 +20,21 @@ class ChaosMonkey(Monkey):
         self.last_run = None
 
     def load_chaos_scripts(self):
-        SCRIPT_DIR = "../scripts/chaos/"
-        return [f for f in os.listdir(SCRIPT_DIR) if
-                os.path.isfile(os.path.join(SCRIPT_DIR, f))]
+        self.SCRIPT_DIR = "../scripts/chaos_safe/"
+        return [f for f in os.listdir(self.SCRIPT_DIR) if
+                os.path.isfile(os.path.join(self.SCRIPT_DIR, f))]
 
     def time_of_the_monkey(self):
         """Create some chaos"""
         if not self.should_run():
             return
-        chaos = random.choice(self.chaos_type)
+        chaos = random.choice(self.chaos_types)
         vm = random.choice(self.get_all_ips())
+        runner = ScriptRunner(vm)
+        runner.connect(username='ubuntu')
+        print chaos
+        runner.run_file(self.SCRIPT_DIR + "/" + chaos)
+
         #TODO run bash script on vm
         self.last_run = datetime.datetime.now()
 
@@ -39,4 +47,3 @@ class ChaosMonkey(Monkey):
         if random.random() > probability:
             return False
         return True
-
