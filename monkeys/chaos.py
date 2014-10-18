@@ -9,6 +9,11 @@ class ChaosMonkey(Monkey):
 
     def __init__(self, config_file, scheduler):
         super(ChaosMonkey, self).__init__(config_file, scheduler)
+        is_enabled = bool(self.config.get("chaos", "enabled"))
+        if is_enabled:
+            schedule = self.config.items("chaos_schedule")
+            scheduler.add_job(self.time_of_the_monkey, trigger='cron',
+                              **dict(schedule))
         self.chaos_types = self.load_chaos_scripts()
         self.last_run = None
 
