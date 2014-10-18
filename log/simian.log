@@ -1,0 +1,179 @@
+security.py - 18 - 2014-10-18 19:45:35,960 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:37,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:39,957 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:41,957 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:43,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:45,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:47,962 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:49,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:51,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:53,958 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:55,962 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:57,959 - security - WARNING - ********************************************************************************
+security.py - 18 - 2014-10-18 19:45:59,961 - security - WARNING - ********************************************************************************
+base.py - 114 - 2014-10-18 19:55:04,002 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:06 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:55:06,003 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:08 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:55:08,003 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:10 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:55:10,005 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:12 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:55:12,003 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:14 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:55:14,002 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:55:16 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 28, in time_of_the_monkey
+    if not self.should_run():
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 40, in should_run
+    cooloff = int(self.config.get("chaos", "cooloff"))
+ValueError: invalid literal for int() with base 10: ''
+base.py - 114 - 2014-10-18 19:56:14,006 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:16 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:56:16,003 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:18 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:56:18,004 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:20 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:56:24,004 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:26 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:56:28,002 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:30 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:56:32,003 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:56:34 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 30, in time_of_the_monkey
+    chaos = random.choice(self.chaos_type)
+AttributeError: 'ChaosMonkey' object has no attribute 'chaos_type'
+base.py - 114 - 2014-10-18 19:58:16,002 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:58:18 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 32, in time_of_the_monkey
+    runner = ScriptRunner(vm)
+NameError: global name 'ScriptRunner' is not defined
+base.py - 114 - 2014-10-18 19:58:24,005 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 19:58:26 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 32, in time_of_the_monkey
+    runner = ScriptRunner(vm)
+NameError: global name 'ScriptRunner' is not defined
+base.py - 114 - 2014-10-18 20:02:37,022 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 20:02:38 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 36, in time_of_the_monkey
+    runner.run_file(chaos)
+  File "/Users/george/github/simian/pySimians/monkeys/scriptrunner.py", line 22, in run_file
+    ftp.put(file_path, 'py_simian.sh')
+  File "/Library/Python/2.7/site-packages/paramiko/sftp_client.py", line 667, in put
+    file_size = os.stat(localpath).st_size
+OSError: [Errno 2] No such file or directory: 'ls.sh'
+base.py - 114 - 2014-10-18 20:02:41,120 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 20:02:42 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 36, in time_of_the_monkey
+    runner.run_file(chaos)
+  File "/Users/george/github/simian/pySimians/monkeys/scriptrunner.py", line 22, in run_file
+    ftp.put(file_path, 'py_simian.sh')
+  File "/Library/Python/2.7/site-packages/paramiko/sftp_client.py", line 667, in put
+    file_size = os.stat(localpath).st_size
+OSError: [Errno 2] No such file or directory: 'ls.sh'
+base.py - 114 - 2014-10-18 20:02:42,938 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 20:02:44 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 36, in time_of_the_monkey
+    runner.run_file(chaos)
+  File "/Users/george/github/simian/pySimians/monkeys/scriptrunner.py", line 21, in run_file
+    ftp = self.client.open_sftp()
+  File "/Library/Python/2.7/site-packages/paramiko/client.py", line 379, in open_sftp
+    return self._transport.open_sftp_client()
+  File "/Library/Python/2.7/site-packages/paramiko/transport.py", line 811, in open_sftp_client
+    return SFTPClient.from_transport(self)
+  File "/Library/Python/2.7/site-packages/paramiko/sftp_client.py", line 130, in from_transport
+    chan.invoke_subsystem('sftp')
+  File "/Library/Python/2.7/site-packages/paramiko/channel.py", line 60, in _check
+    return func(self, *args, **kwds)
+  File "/Library/Python/2.7/site-packages/paramiko/channel.py", line 254, in invoke_subsystem
+    self._wait_for_event()
+  File "/Library/Python/2.7/site-packages/paramiko/channel.py", line 1086, in _wait_for_event
+    raise e
+EOFError
+base.py - 114 - 2014-10-18 20:06:54,697 - apscheduler.executors.default - ERROR - Job "ChaosMonkey.time_of_the_monkey (trigger: cron[second='*/2'], next run at: 2014-10-18 20:06:56 EEST)" raised an exception
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/apscheduler/executors/base.py", line 108, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/Users/george/github/simian/pySimians/monkeys/chaos.py", line 34, in time_of_the_monkey
+    runner.connect(username='ubuntu')
+  File "/Users/george/github/simian/pySimians/monkeys/scriptrunner.py", line 12, in connect
+    self.client.connect(self.host, username=username, password=password, pkey=pkey)
+  File "/Library/Python/2.7/site-packages/paramiko/client.py", line 307, in connect
+    look_for_keys, gss_auth, gss_kex, gss_deleg_creds, gss_host)
+  File "/Library/Python/2.7/site-packages/paramiko/client.py", line 519, in _auth
+    raise saved_exception
+AuthenticationException: Authentication failed.

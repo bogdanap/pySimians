@@ -48,5 +48,20 @@ class RunCommand(cmd.Cmd):
         for conn in self.connections:
             conn.close()
 
+    def do_run_file(self, file):
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(self.hosts[0][0],
+                    username=self.hosts[0][1],
+                    password=self.hosts[0][2])
+        ftp = ssh.open_sftp()
+        ftp.put(file, 'remotefile.sh')
+
+        stdin, stdout, stderr = ssh.exec_command("sh remotefile.sh")
+        for line in stdout.read().splitlines():
+            print line
+        ftp.close()
+        ssh.close()
+
 if __name__ == '__main__':
     RunCommand().cmdloop()

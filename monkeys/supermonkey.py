@@ -28,9 +28,8 @@ class GCEMixin(object):
 class Monkey(GCEmixin, object):
 # Superclass for all monkey types
 
-    def __init__(self, config_file, scheduler):
-        self.config = ConfigParser.RawConfigParser(allow_no_value=True)
-        self.config.read(config_file)
+    def __init__(self, config, scheduler):
+        self.config = config
         self.scheduler = scheduler
 
     def get_vm_groups(self):
