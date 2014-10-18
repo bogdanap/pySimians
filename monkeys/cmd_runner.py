@@ -14,7 +14,7 @@ class RunCommand(cmd.Cmd):
         self.connections = []
 
     def do_add_host(self, args):
-        """add_host 
+        """add_host
         Add the host to the host list"""
         if args:
             self.hosts.append(args.split(','))
@@ -27,13 +27,13 @@ class RunCommand(cmd.Cmd):
             client = paramiko.SSHClient()
             client.set_missing_host_key_policy(
                 paramiko.AutoAddPolicy())
-            client.connect(host[0], 
-                username=host[1], 
+            client.connect(host[0],
+                username=host[1],
                 password=host[2])
             self.connections.append(client)
 
     def do_run(self, command):
-        """run 
+        """run
         Execute this command on all hosts in the list"""
         if command:
             for host, conn in zip(self.hosts, self.connections):

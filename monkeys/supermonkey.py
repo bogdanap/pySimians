@@ -2,7 +2,7 @@ import ConfigParser
 
 from collections import defaultdict
 
-class Monkey():
+class Monkey(object):
 # Superclass for all monkey types
 
     def __init__(self):
