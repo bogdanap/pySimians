@@ -11,4 +11,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     runner = MonkeyRunner(args.config_file)
-    runner.start()
+    runner.unleash()

@@ -19,6 +19,6 @@ class MonkeyRunner(object):
         for m in self.monkey_list:
             m['class_name'](config_file, self.scheduler)
 
-    def start(self):
+    def unleash(self):
         self.scheduler.start()
 
