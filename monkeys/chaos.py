@@ -1,3 +1,4 @@
+import datetime
 import os
 import random
 
@@ -9,6 +10,7 @@ class ChaosMonkey(Monkey):
     def __init__(self, config_file, scheduler):
         super(ChaosMonkey, self).__init__(config_file, scheduler)
         self.chaos_types = self.load_chaos_scripts()
+        self.last_run = None
 
     def load_chaos_scripts(self):
         SCRIPT_DIR = "../scripts/"
@@ -21,8 +23,13 @@ class ChaosMonkey(Monkey):
             return
         chaos = random.choice(self.chaos_type)
         vm = random.choice(self.get_all_ips())
-
+        #TODO run bash script on vm
+        self.last_run = datetime.datetime.now()
 
     def should_run(self):
+        cooloff = int(self.config.get("chaos", "cooloff"))
+        if self.last_run and datetime.datetime.now() - datetime.timedelta(
+                hours=cooloff) < self.last_run:
+            return False
         return True
 
