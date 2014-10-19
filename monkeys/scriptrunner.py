@@ -24,7 +24,6 @@ class ScriptRunner(object):
   def run_file(self, file_path):
     filename = os.path.basename(file_path)
     self.ftp.put(file_path, filename)
-    print filename
     command = "sh %s" %(filename)
     stdin, stdout, stderr = self.client.exec_command(command)
     self.ftp.remove(filename)
