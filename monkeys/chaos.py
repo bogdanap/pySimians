@@ -8,8 +8,8 @@ from supermonkey import Monkey
 
 class ChaosMonkey(Monkey):
 
-    def __init__(self, config_file, scheduler):
-        super(ChaosMonkey, self).__init__(config_file, scheduler)
+    def __init__(self, config_file, scheduler, twitter):
+        super(ChaosMonkey, self).__init__(config_file, scheduler, twitter)
         is_enabled = bool(self.config.get("chaos", "enabled"))
         if is_enabled:
             schedule = self.config.items("chaos_schedule")
@@ -43,7 +43,7 @@ class ChaosMonkey(Monkey):
         runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
         runner.close()
-        #TODO run bash script on vm
+        self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'" % (chaos, vm))
         self.last_run = datetime.datetime.now()
 
     def should_run(self):
