@@ -24,7 +24,7 @@ class ScriptRunner(object):
     token = random.randint(1,1000)
     filename = "py_simian%d.sh" %(token)
     self.ftp.put(file_path, filename)
-    stdin, stdout, stderr = self.client.exec_command('sh py_simian.sh')
+    stdin, stdout, stderr = self.client.exec_command('sh %s' % filename)
     self.ftp.remove(filename)
     return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
 
