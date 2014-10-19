@@ -5,11 +5,11 @@ class ScriptRunner(object):
   def __init__(self, host):
     self.host = host
 
-  def connect(self, username=None, password=None, pkey=None):
+  def connect(self, username=None, password=None, key_filename=None):
     self.client = paramiko.SSHClient()
     self.client.set_missing_host_key_policy(
           paramiko.AutoAddPolicy())
-    self.client.connect(self.host, username=username, password=password, pkey=pkey)
+    self.client.connect(self.host, username=username, password=password, key_filename=key_filename)
 
   def run(self, command):
     stdin, stdout, stderr = self.client.exec_command(command)
