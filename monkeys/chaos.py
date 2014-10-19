@@ -6,7 +6,6 @@ from scriptrunner import ScriptRunner
 from supermonkey import Monkey
 
 
-
 class ChaosMonkey(Monkey):
 
     def __init__(self, config_file, scheduler):
@@ -17,6 +16,10 @@ class ChaosMonkey(Monkey):
             scheduler.add_job(self.time_of_the_monkey, trigger='cron',
                               **dict(schedule))
         self.chaos_types = self.load_chaos_scripts()
+
+        self.username = self.config.get("vms_authentication", "username")
+        self.password = self.config.get("vms_authentication", "password")
+        self.key_filename = self.config.get("vms_authentication", "key_filename")
         self.last_run = None
 
     def load_chaos_scripts(self):
@@ -31,10 +34,9 @@ class ChaosMonkey(Monkey):
         chaos = random.choice(self.chaos_types)
         vm = random.choice(self.get_all_ips())
         runner = ScriptRunner(vm)
-        runner.connect(username='ubuntu')
-        print chaos
+        runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
-
+        runner.close()
         #TODO run bash script on vm
         self.last_run = datetime.datetime.now()
 

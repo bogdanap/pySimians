@@ -5,25 +5,27 @@ class ScriptRunner(object):
   def __init__(self, host):
     self.host = host
 
-  def connect(self, username=None, password=None, pkey=None):
+  def connect(self, username=None, password=None, key_filename=None):
     self.client = paramiko.SSHClient()
     self.client.set_missing_host_key_policy(
           paramiko.AutoAddPolicy())
-    self.client.connect(self.host, username=username, password=password, pkey=pkey)
+    self.client.connect(self.host, username=username, password=password, key_filename=key_filename)
+    self.ftp = self.client.open_sftp()
 
   def run(self, command):
     stdin, stdout, stderr = self.client.exec_command(command)
     stdin.close()
     for line in stdout.read().splitlines():
       print 'host: %s: %s' % (self.host, line)
+    return stdout.channel.recv_exit_status()
 
   def run_file(self, file_path):
-    ftp = self.client.open_sftp()
-    ftp.put(file_path, 'py_simian.sh')
+    self.ftp.put(file_path, 'py_simian.sh')
     stdin, stdout, stderr = self.client.exec_command('sh py_simian.sh')
-    for line in stdout.read().splitlines():
-      print line
-    ftp.close()
+    return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
+
+  def close(self):
+    self.ftp.close()
     self.client.close()
 
 if __name__=='__main__':
@@ -34,4 +36,4 @@ if __name__=='__main__':
   # runner = ScriptRunner('127.0.0.1')
   # runner.connect(username='ioana', password='...')
   # runner.run('uptime')
-  runner.run_file('/Users/ioana/Documents/pySimians/scripts/ls.sh')
+  print runner.run_file('../scripts/chaos_safe/ls.sh')
