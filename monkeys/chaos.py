@@ -17,9 +17,15 @@ class ChaosMonkey(Monkey):
                               **dict(schedule))
         self.chaos_types = self.load_chaos_scripts()
 
-        self.username = self.config.get("vms_authentication", "username")
-        self.password = self.config.get("vms_authentication", "password")
-        self.key_filename = self.config.get("vms_authentication", "key_filename")
+        self.username = None
+        self.password = None
+        self.key_filename = None
+        if self.config.has_option("vms_authentication", "username"):
+          self.username = self.config.get("vms_authentication", "username")
+        if self.config.has_option("vms_authentication", "password"):
+          self.password = self.config.get("vms_authentication", "password")
+        if self.config.has_option("vms_authentication", "key_filename"):
+          self.key_filename = self.config.get("vms_authentication", "key_filename")
         self.last_run = None
 
     def load_chaos_scripts(self):
