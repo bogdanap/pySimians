@@ -17,9 +17,7 @@ class ScriptRunner(object):
   def run(self, command):
     stdin, stdout, stderr = self.client.exec_command(command)
     stdin.close()
-    for line in stdout.read().splitlines():
-      print 'host: %s: %s' % (self.host, line)
-    return stdout.channel.recv_exit_status()
+    return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
 
   def run_file(self, file_path):
     filename = os.path.basename(file_path)
@@ -32,13 +30,3 @@ class ScriptRunner(object):
   def close(self):
     self.ftp.close()
     self.client.close()
-
-if __name__=='__main__':
-  runner = ScriptRunner('ec2-54-77-161-66.eu-west-1.compute.amazonaws.com')
-  runner.connect(username='ubuntu')
-  runner.run("uptime")
-
-  # runner = ScriptRunner('127.0.0.1')
-  # runner.connect(username='ioana', password='...')
-  # runner.run('uptime')
-  print runner.run_file('../scripts/chaos_safe/ls.sh')
