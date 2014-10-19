@@ -43,7 +43,8 @@ class ChaosMonkey(Monkey):
         runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
         runner.close()
-        self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'" % (chaos, vm))
+        if self.twitter:
+            self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'" % (chaos, vm))
         self.last_run = datetime.datetime.now()
 
     def should_run(self):
