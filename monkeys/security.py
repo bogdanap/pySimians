@@ -11,14 +11,15 @@ logger = logging.getLogger('security')
 
 class SecurityMonkey(Monkey):
 
-    def __init__(self, config, scheduler):
-        super(SecurityMonkey, self).__init__(config, scheduler)
+    def __init__(self, config, scheduler, twitter):
+        super(SecurityMonkey, self).__init__(config, scheduler, twitter)
         schedule = self.config.items('security_schedule')
         int_schedule = map(lambda (x, y): (x, int(y)), schedule)
         self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
                                **dict(int_schedule))
 
     def time_of_the_monkey(self):
+        logger.info('Security run')
         scripts = self.config.get('security', 'scripts')
         scripts = scripts.split(',')
         script_path = self.config.get('security', 'script_path')
@@ -45,11 +46,13 @@ class SecurityMonkey(Monkey):
         )
         self.result_count -= 1
         if not self.result_count:
+            logger.info('Security run done. Check report')
             self.complete_run()
 
     def complete_run(self):
-        eport_path = self.config.get('security', 'report_path')
+        report_path = self.config.get('security', 'report_path')
         filename = 'security-report-%s.txt' % str(datetime.now())
+        filename = os.path.join(report_path, filename)
         with open(filename, 'w') as f:
             for result in self.results:
                 if not result['return_code'] and result['stdout'].strip() == 'OK':

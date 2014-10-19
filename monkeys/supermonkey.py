@@ -1,7 +1,7 @@
 import re
 from collections import defaultdict
 from subprocess import check_output
-import ConfigParser
+
 
 class GCEMixin(object):
     """ A basic plugin to interact with Google Compute Engine"""
@@ -27,9 +27,10 @@ class GCEMixin(object):
 class SuperMonkey(object):
 # Superclass for all monkey types
 
-    def __init__(self, config, scheduler):
+    def __init__(self, config, scheduler, twitter):
         self.config = config
         self.scheduler = scheduler
+        self.twitter = twitter
 
     def get_vm_groups(self):
         groups = defaultdict(list)

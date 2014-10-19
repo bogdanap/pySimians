@@ -1,4 +1,5 @@
-
+import ConfigParser
+import twitter
 from apscheduler.schedulers.background import BlockingScheduler
 
 from chaos import ChaosMonkey
@@ -14,9 +15,20 @@ class MonkeyHorde(object):
             dict(class_name=ChaosMonkey),
             dict(class_name=SecurityMonkey),
         ]
+        self.twitter = self.get_twitter_connector()
         self.scheduler = BlockingScheduler()
         for m in self.monkey_list:
-            m['class_name'](config_file, self.scheduler)
+            m['class_name'](config_file, self.scheduler, self.twitter)
 
     def unleash(self):
+        if self.twitter:
+            self.twitter.PostUpdate("I unleashed the evil monkey horde!!!")
         self.scheduler.start()
+
+    def get_twitter_connector(self):
+        try:
+            credentials = self.config_file.items("twitter")
+        except ConfigParser.NoSectionError:
+            return None
+        return twitter.Api(**dict(credentials))
+
