@@ -39,9 +39,10 @@ class ChaosMonkey(Monkey):
         """Create some chaos"""
         if not self.should_run():
             return
-        logger.info('Chaos run')
         chaos = random.choice(self.chaos_types)
+        logger.info("Selected random script: '%s'" % chaos)
         vm = random.choice(self.get_all_ips())
+        logger.info("Selected random machine '%s'" % vm)
         runner = ScriptRunner(vm)
         runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
@@ -55,6 +56,7 @@ class ChaosMonkey(Monkey):
         cooloff = int(self.config.get("chaos", "cooloff"))
         if self.last_run and datetime.datetime.now() - datetime.timedelta(
                 hours=cooloff) < self.last_run:
+            logger.info("Cooloff period. Chaos monkey will not run.")
             return False
         probability = float(self.config.get("chaos", "probability"))
         if random.random() > probability:
