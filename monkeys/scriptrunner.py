@@ -1,4 +1,5 @@
 import paramiko
+import random
 
 class ScriptRunner(object):
 
@@ -20,8 +21,11 @@ class ScriptRunner(object):
     return stdout.channel.recv_exit_status()
 
   def run_file(self, file_path):
-    self.ftp.put(file_path, 'py_simian.sh')
+    token = random.randint(1,1000)
+    filename = "py_simian%d.sh" %(token)
+    self.ftp.put(file_path, filename)
     stdin, stdout, stderr = self.client.exec_command('sh py_simian.sh')
+    self.ftp.remove(filename)
     return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
 
   def close(self):
