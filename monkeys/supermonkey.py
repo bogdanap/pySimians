@@ -31,6 +31,16 @@ class SuperMonkey(object):
         self.config = config
         self.scheduler = scheduler
         self.twitter = twitter
+        self.username = None
+        self.password = None
+        self.key_filename = None
+        if self.config.has_option("vms_authentication", "username"):
+          self.username = self.config.get("vms_authentication", "username")
+        if self.config.has_option("vms_authentication", "password"):
+          self.password = self.config.get("vms_authentication", "password")
+        if self.config.has_option("vms_authentication", "key_filename"):
+          self.key_filename = self.config.get("vms_authentication", "key_filename")
+
 
     def get_vm_groups(self):
         groups = defaultdict(list)
