@@ -13,19 +13,12 @@ class SecurityMonkey(Monkey):
 
     def __init__(self, config, scheduler, twitter):
         super(SecurityMonkey, self).__init__(config, scheduler, twitter)
-        schedule = self.config.items('security_schedule')
-        int_schedule = map(lambda (x, y): (x, int(y)), schedule)
-        self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
-                               **dict(int_schedule))
-        self.username = None
-        self.password = None
-        self.key_filename = None
-        if self.config.has_option("vms_authentication", "username"):
-          self.username = self.config.get("vms_authentication", "username")
-        if self.config.has_option("vms_authentication", "password"):
-          self.password = self.config.get("vms_authentication", "password")
-        if self.config.has_option("vms_authentication", "key_filename"):
-          self.key_filename = self.config.get("vms_authentication", "key_filename")
+        is_enabled = bool(self.config.get("security", "enabled"))
+        if is_enabled:
+            schedule = self.config.items('security_schedule')
+            int_schedule = map(lambda (x, y): (x, int(y)), schedule)
+            self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
+                                   **dict(int_schedule))
 
     def time_of_the_monkey(self):
         logger.info('Security run')
