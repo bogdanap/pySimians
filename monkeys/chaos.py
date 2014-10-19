@@ -38,7 +38,10 @@ class ChaosMonkey(Monkey):
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
         runner.close()
         if self.twitter:
-            self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (chaos, vm))
+            try:
+                self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (chaos, vm))
+            except Exception as e:
+                logger.exception(e)
         logger.info("Ran '%s' on '%s'." % (chaos, vm))
         self.last_run = datetime.datetime.now()
 

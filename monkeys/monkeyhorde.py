@@ -1,3 +1,5 @@
+from logging import getLogger
+
 import ConfigParser
 import twitter
 from apscheduler.schedulers.background import BlockingScheduler
@@ -6,6 +8,8 @@ from chaos import ChaosMonkey
 #from janitor import JanitorMonkey
 from security import SecurityMonkey
 
+
+log = getLogger(__name__)
 
 class MonkeyHorde(object):
 
@@ -22,7 +26,10 @@ class MonkeyHorde(object):
 
     def unleash(self):
         if self.twitter:
-            self.twitter.PostUpdate("I unleashed the evil monkey horde!!!")
+            try:
+                self.twitter.PostUpdate("I unleashed the evil monkey horde!!!")
+            except Exception as e:
+                log.exception(e)
         self.scheduler.start()
 
     def get_twitter_connector(self):
