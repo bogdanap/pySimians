@@ -22,7 +22,7 @@ class ScriptRunner(object):
 
   def run_file(self, file_path):
     token = random.randint(1,1000)
-    filename = 'py_simian' + token + '.sh'
+    filename = "py_simian%d.sh" %(token)
     self.ftp.put(file_path, filename)
     stdin, stdout, stderr = self.client.exec_command('sh py_simian.sh')
     self.ftp.remove(filename)
