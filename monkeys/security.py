@@ -22,9 +22,10 @@ class SecurityMonkey(Monkey):
         scripts = self.config.get('security', 'scripts')
         scripts = scripts.split(',')
         script_path = self.config.get('security', 'script_path')
-        self.result_count = len(self.get_all_ips()) * len(scripts)
+        ips = self.get_all_ips()
+        self.result_count = len(ips * len(scripts))
         self.results = []
-        for ip in self.get_all_ips():
+        for ip in ips:
             for script_file in scripts:
                 script = os.path.join(script_path, script_file)
                 self.scheduler.add_job(self.one_check, args=(ip, script),
@@ -38,6 +39,8 @@ class SecurityMonkey(Monkey):
             dict(return_code=return_code,
                  stdout=stdout,
                  stderr=stderr,
+                 ip=ip,
+                 scriptfile=script_file
                  )
         )
         self.result_count -= 1
@@ -45,4 +48,14 @@ class SecurityMonkey(Monkey):
             self.complete_run()
 
     def complete_run(self):
-        print self.results
+        eport_path = self.config.get('security', 'report_path')
+        filename = 'security-report-%s.txt' % str(datetime.now())
+        with open(filename, 'w') as f:
+            for result in self.results:
+                if not result['return_code'] and result['stdout'].strip() == 'OK':
+                    f.write('%s - %s: OK\n' % (result['ip'],
+                        result['scriptfile']))
+                else:
+                    f.write('%s - %s: (%s, %s)\n' % (result['ip'],
+                        result['scriptfile'], result['stdout'],
+                        result['stderr']))
