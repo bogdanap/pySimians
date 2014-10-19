@@ -13,7 +13,7 @@ Selects a random machine from your infrastructure and tries to break it (either 
 
 Security monkey
 ---------------
-Crawls your servers and checks for bad practices ans known flaws (expired SSL certificates, root login, etc). It then creates a report with all the anomalies that were detected and the faulty servers.
+Crawls your servers and checks for bad practices and known flaws (expired SSL certificates, vulnerable package versions, etc). It then creates a report with all the anomalies that were detected and the faulty servers.
 
 Janitor monkey
 --------------
