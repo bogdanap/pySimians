@@ -17,6 +17,15 @@ class SecurityMonkey(Monkey):
         int_schedule = map(lambda (x, y): (x, int(y)), schedule)
         self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
                                **dict(int_schedule))
+        self.username = None
+        self.password = None
+        self.key_filename = None
+        if self.config.has_option("vms_authentication", "username"):
+          self.username = self.config.get("vms_authentication", "username")
+        if self.config.has_option("vms_authentication", "password"):
+          self.password = self.config.get("vms_authentication", "password")
+        if self.config.has_option("vms_authentication", "key_filename"):
+          self.key_filename = self.config.get("vms_authentication", "key_filename")
 
     def time_of_the_monkey(self):
         logger.info('Security run')
@@ -34,7 +43,7 @@ class SecurityMonkey(Monkey):
 
     def one_check(self, ip, script_file):
         runner = ScriptRunner(ip)
-        runner.connect(username='ubuntu')
+        runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
         return_code, stdout, stderr = runner.run_file(script_file)
         self.results.append(
             dict(return_code=return_code,
@@ -48,6 +57,7 @@ class SecurityMonkey(Monkey):
         if not self.result_count:
             logger.info('Security run done. Check report')
             self.complete_run()
+        runner.close()
 
     def complete_run(self):
         report_path = self.config.get('security', 'report_path')
