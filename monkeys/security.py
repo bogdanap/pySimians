@@ -1,9 +1,13 @@
 
+from datetime import datetime
 import logging
+import os.path
 
+from scriptrunner import ScriptRunner
 from supermonkey import Monkey
 
 logger = logging.getLogger('security')
+
 
 class SecurityMonkey(Monkey):
 
@@ -12,7 +16,33 @@ class SecurityMonkey(Monkey):
         schedule = self.config.items('security_schedule')
         int_schedule = map(lambda (x, y): (x, int(y)), schedule)
         self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
-                **dict(int_schedule))
+                               **dict(int_schedule))
 
     def time_of_the_monkey(self):
-        logger.warn("*" * 80)
+        scripts = self.config.get('security', 'scripts')
+        scripts = scripts.split(',')
+        script_path = self.config.get('security', 'script_path')
+        self.result_count = len(self.get_all_ips()) * len(scripts)
+        self.results = []
+        for ip in self.get_all_ips():
+            for script_file in scripts:
+                script = os.path.join(script_path, script_file)
+                self.scheduler.add_job(self.one_check, args=(ip, script),
+                                       next_run_time=datetime.now())
+
+    def one_check(self, ip, script_file):
+        runner = ScriptRunner(ip)
+        runner.connect(username='ubuntu')
+        return_code, stdout, stderr = runner.run_file(script_file)
+        self.results.append(
+            dict(return_code=return_code,
+                 stdout=stdout,
+                 stderr=stderr,
+                 )
+        )
+        self.result_count -= 1
+        if not self.result_count:
+            self.complete_run()
+
+    def complete_run(self):
+        print self.results
