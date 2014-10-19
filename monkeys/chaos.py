@@ -1,10 +1,12 @@
 import datetime
+import logging
 import os
 import random
 
 from scriptrunner import ScriptRunner
 from supermonkey import Monkey
 
+logger = logging.getLogger('chaos')
 
 class ChaosMonkey(Monkey):
 
@@ -37,6 +39,7 @@ class ChaosMonkey(Monkey):
         """Create some chaos"""
         if not self.should_run():
             return
+        logger.info('Chaos run')
         chaos = random.choice(self.chaos_types)
         vm = random.choice(self.get_all_ips())
         runner = ScriptRunner(vm)
@@ -44,7 +47,8 @@ class ChaosMonkey(Monkey):
         runner.run_file(self.SCRIPT_DIR + "/" + chaos)
         runner.close()
         if self.twitter:
-            self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'" % (chaos, vm))
+            self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (chaos, vm))
+        logger.info("Ran '%s' on '%s'." % (chaos, vm))
         self.last_run = datetime.datetime.now()
 
     def should_run(self):
