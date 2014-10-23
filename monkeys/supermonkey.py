@@ -1,3 +1,4 @@
+import os
 import re
 from collections import defaultdict
 from subprocess import check_output
@@ -10,7 +11,7 @@ class GCEMixin(object):
         self._cge_machines = None
         self._gce_enabled = False
         if self.config.has_section("gce"):
-            self._gce_enabled = True #bool(self.config.get("gce", "enabled"))
+            self._gce_enabled = True
             self._gce_pattern = self.config.get("gce", "pattern")
 
     def get_all_ips(self):
@@ -31,6 +32,9 @@ class SuperMonkey(object):
         self.config = config
         self.scheduler = scheduler
         self.twitter = twitter
+        self.init_vms_auth()
+
+    def init_vms_auth(self):
         self.username = None
         self.password = None
         self.key_filename = None
@@ -39,8 +43,11 @@ class SuperMonkey(object):
         if self.config.has_option("vms_authentication", "password"):
           self.password = self.config.get("vms_authentication", "password")
         if self.config.has_option("vms_authentication", "key_filename"):
-          self.key_filename = self.config.get("vms_authentication", "key_filename")
+          self.key_filename = self.config.get("vms_authentication",
+                                              "key_filename")
 
+    def is_enabled(self):
+        return bool(self.config.get(self.CONFIG_SECTION, "enabled"))
 
     def get_vm_groups(self):
         groups = defaultdict(list)
@@ -54,6 +61,14 @@ class SuperMonkey(object):
 
     def get_all_ips(self):
         return [ip for ip, _ in self.config.items("vms")]
+
+    def get_schedule(self):
+        return self.config.items(self.CONFIG_SECTION+"_schedule")
+
+    def load_scripts(self):
+        script_dir = self.config.get(self.CONFIG_SECTION, "script_path")
+        return [os.path.join(script_dir, f) for f in os.listdir(script_dir)
+                if os.path.isfile(os.path.join(script_dir, f))]
 
     def time_of_the_monkey(self):
         raise NotImplemented

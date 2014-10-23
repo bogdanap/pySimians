@@ -13,30 +13,27 @@ class SecurityMonkey(Monkey):
 
     def __init__(self, config, scheduler, twitter):
         super(SecurityMonkey, self).__init__(config, scheduler, twitter)
-        is_enabled = bool(self.config.get("security", "enabled"))
-        if is_enabled:
-            schedule = self.config.items('security_schedule')
-            int_schedule = map(lambda (x, y): (x, int(y)), schedule)
+        self.CONFIG_SECTION = "security"
+        if self.is_enabled():
+            int_schedule = map(lambda (x, y): (x, int(y)), self.get_schedule())
             self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
                                    **dict(int_schedule))
 
     def time_of_the_monkey(self):
         logger.info('Security run')
-        scripts = self.config.get('security', 'scripts')
-        scripts = scripts.split(',')
-        script_path = self.config.get('security', 'script_path')
         ips = self.get_all_ips()
+        scripts = self.load_scripts()
         self.result_count = len(ips * len(scripts))
         self.results = []
         for ip in ips:
-            for script_file in scripts:
-                script = os.path.join(script_path, script_file)
+            for script in scripts:
                 self.scheduler.add_job(self.one_check, args=(ip, script),
                                        next_run_time=datetime.now())
 
     def one_check(self, ip, script_file):
         runner = ScriptRunner(ip)
-        runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
+        runner.connect(username=self.username, password=self.password,
+                       key_filename=self.key_filename)
         return_code, stdout, stderr = runner.run_file(script_file)
         self.results.append(
             dict(return_code=return_code,

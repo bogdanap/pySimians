@@ -1,6 +1,6 @@
 import datetime
 import logging
-import os
+import os.path
 import random
 
 from scriptrunner import ScriptRunner
@@ -12,34 +12,30 @@ class ChaosMonkey(Monkey):
 
     def __init__(self, config_file, scheduler, twitter):
         super(ChaosMonkey, self).__init__(config_file, scheduler, twitter)
-        is_enabled = bool(self.config.get("chaos", "enabled"))
-        if is_enabled:
-            schedule = self.config.items("chaos_schedule")
+        self.CONFIG_SECTION = "chaos"
+        if self.is_enabled():
             scheduler.add_job(self.time_of_the_monkey, trigger='cron',
-                              **dict(schedule))
-        self.chaos_types = self.load_chaos_scripts()
+                              **dict(self.get_schedule()))
         self.last_run = None
-
-    def load_chaos_scripts(self):
-        self.SCRIPT_DIR = "../scripts/chaos_safe/"
-        return [f for f in os.listdir(self.SCRIPT_DIR) if
-                os.path.isfile(os.path.join(self.SCRIPT_DIR, f))]
 
     def time_of_the_monkey(self):
         """Create some chaos"""
         if not self.should_run():
             return
-        chaos = random.choice(self.chaos_types)
+        chaos_script = random.choice(self.load_scripts())
+        chaos = os.path.basename(chaos_script)
         logger.info("Selected random script: '%s'" % chaos)
         vm = random.choice(self.get_all_ips())
         logger.info("Selected random machine '%s'" % vm)
         runner = ScriptRunner(vm)
-        runner.connect(username=self.username, password=self.password, key_filename=self.key_filename)
-        runner.run_file(self.SCRIPT_DIR + "/" + chaos)
+        runner.connect(username=self.username, password=self.password,
+                       key_filename=self.key_filename)
+        runner.run_file(chaos_script)
         runner.close()
         if self.twitter:
             try:
-                self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (chaos, vm))
+                self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (
+                    chaos, vm))
             except Exception as e:
                 logger.exception(e)
         logger.info("Ran '%s' on '%s'." % (chaos, vm))
