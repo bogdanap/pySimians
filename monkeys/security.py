@@ -11,16 +11,17 @@ logger = logging.getLogger('security')
 
 class SecurityMonkey(Monkey):
 
+    CONFIG_SECTION = "security"
+
     def __init__(self, config, scheduler, twitter):
         super(SecurityMonkey, self).__init__(config, scheduler, twitter)
-        self.CONFIG_SECTION = "security"
         if self.is_enabled():
             int_schedule = map(lambda (x, y): (x, int(y)), self.get_schedule())
             self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',
                                    **dict(int_schedule))
 
     def time_of_the_monkey(self):
-        logger.info('Security run')
+        logger.info('Starting security run')
         ips = self.get_all_ips()
         scripts = self.load_scripts()
         self.result_count = len(ips * len(scripts))

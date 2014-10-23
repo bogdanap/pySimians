@@ -10,9 +10,10 @@ logger = logging.getLogger('chaos')
 
 class ChaosMonkey(Monkey):
 
+    CONFIG_SECTION = "chaos"
+
     def __init__(self, config_file, scheduler, twitter):
         super(ChaosMonkey, self).__init__(config_file, scheduler, twitter)
-        self.CONFIG_SECTION = "chaos"
         if self.is_enabled():
             scheduler.add_job(self.time_of_the_monkey, trigger='cron',
                               **dict(self.get_schedule()))
