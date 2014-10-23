@@ -28,11 +28,11 @@ class GCEMixin(object):
 class SuperMonkey(object):
 # Superclass for all monkey types
 
-    def __init__(self, config, scheduler, twitter):
+    def __init__(self, config, scheduler, tweet):
         self.config = config
         self.scheduler = scheduler
-        self.twitter = twitter
         self.init_vms_auth()
+        self.tweet = tweet
 
     def init_vms_auth(self):
         self.username = None

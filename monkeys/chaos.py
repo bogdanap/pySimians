@@ -12,8 +12,8 @@ class ChaosMonkey(Monkey):
 
     CONFIG_SECTION = "chaos"
 
-    def __init__(self, config_file, scheduler, twitter):
-        super(ChaosMonkey, self).__init__(config_file, scheduler, twitter)
+    def __init__(self, config_file, scheduler, tweet):
+        super(ChaosMonkey, self).__init__(config_file, scheduler, tweet)
         if self.is_enabled():
             scheduler.add_job(self.time_of_the_monkey, trigger='cron',
                               **dict(self.get_schedule()))
@@ -33,12 +33,7 @@ class ChaosMonkey(Monkey):
                        key_filename=self.key_filename)
         runner.run_file(chaos_script)
         runner.close()
-        if self.twitter:
-            try:
-                self.twitter.PostUpdate("Haha! Just ran '%s' on '%s'." % (
-                    chaos, vm))
-            except Exception as e:
-                logger.exception(e)
+        self.tweet("Haha! Just ran '%s' on '%s'." % (chaos, vm))
         logger.info("Ran '%s' on '%s'." % (chaos, vm))
         self.last_run = datetime.datetime.now()
 

@@ -13,8 +13,8 @@ class SecurityMonkey(Monkey):
 
     CONFIG_SECTION = "security"
 
-    def __init__(self, config, scheduler, twitter):
-        super(SecurityMonkey, self).__init__(config, scheduler, twitter)
+    def __init__(self, config, scheduler, tweet):
+        super(SecurityMonkey, self).__init__(config, scheduler, tweet)
         if self.is_enabled():
             int_schedule = map(lambda (x, y): (x, int(y)), self.get_schedule())
             self.scheduler.add_job(self.time_of_the_monkey, trigger='interval',

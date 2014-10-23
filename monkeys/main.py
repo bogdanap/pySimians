@@ -23,14 +23,10 @@ class MonkeyHorde(object):
         self.twitter = self.get_twitter_connector()
         self.scheduler = BlockingScheduler()
         for m in self.monkey_list:
-            m['class_name'](config_file, self.scheduler, self.twitter)
+            m['class_name'](config_file, self.scheduler, self.tweet)
 
     def unleash(self):
-        if self.twitter:
-            try:
-                self.twitter.PostUpdate("I unleashed the evil monkey horde!!!")
-            except Exception as e:
-                log.exception(e)
+        self.tweet("Unleashing the evil monkey horde...")
         self.scheduler.start()
 
     def get_twitter_connector(self):
@@ -39,6 +35,14 @@ class MonkeyHorde(object):
         except ConfigParser.NoSectionError:
             return None
         return twitter.Api(**dict(credentials))
+
+    def tweet(self, message):
+      if not self.twitter:
+        return
+      try:
+        self.twitter.PostUpdate(message)
+      except Exception as e:
+        log.exception(e)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Monkey runner')
