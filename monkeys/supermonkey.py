@@ -3,6 +3,8 @@ import re
 from collections import defaultdict
 from subprocess import check_output
 
+from scriptrunner import ScriptRunner
+
 
 class GCEMixin(object):
     """ A basic plugin to interact with Google Compute Engine"""
@@ -31,23 +33,13 @@ class SuperMonkey(object):
     def __init__(self, config, scheduler, tweet):
         self.config = config
         self.scheduler = scheduler
-        self.init_vms_auth()
         self.tweet = tweet
-
-    def init_vms_auth(self):
-        self.username = None
-        self.password = None
-        self.key_filename = None
-        if self.config.has_option("vms_authentication", "username"):
-          self.username = self.config.get("vms_authentication", "username")
-        if self.config.has_option("vms_authentication", "password"):
-          self.password = self.config.get("vms_authentication", "password")
-        if self.config.has_option("vms_authentication", "key_filename"):
-          self.key_filename = self.config.get("vms_authentication",
-                                              "key_filename")
 
     def is_enabled(self):
         return bool(self.config.get(self.CONFIG_SECTION, "enabled"))
+
+    def get_vm_credentials(self):
+      return self.config.items("vms_authentication")
 
     def get_vm_groups(self):
         groups = defaultdict(list)
@@ -69,6 +61,13 @@ class SuperMonkey(object):
         script_dir = self.config.get(self.CONFIG_SECTION, "script_path")
         return [os.path.join(script_dir, f) for f in os.listdir(script_dir)
                 if os.path.isfile(os.path.join(script_dir, f))]
+
+    def run_script_on_host(self, host, script):
+      runner = ScriptRunner(host)
+      runner.connect(**dict(self.get_vm_credentials()))
+      return_code, stdout, stderr = runner.run_file(script)
+      runner.close()
+      return return_code, stdout, stderr
 
     def time_of_the_monkey(self):
         raise NotImplemented

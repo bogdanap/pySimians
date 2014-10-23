@@ -1,9 +1,7 @@
-
 from datetime import datetime
 import logging
 import os.path
 
-from scriptrunner import ScriptRunner
 from supermonkey import Monkey
 
 logger = logging.getLogger('security')
@@ -32,10 +30,7 @@ class SecurityMonkey(Monkey):
                                        next_run_time=datetime.now())
 
     def one_check(self, ip, script_file):
-        runner = ScriptRunner(ip)
-        runner.connect(username=self.username, password=self.password,
-                       key_filename=self.key_filename)
-        return_code, stdout, stderr = runner.run_file(script_file)
+        return_code, stdout, stderr = self.run_script_on_host(ip, script_file)
         self.results.append(
             dict(return_code=return_code,
                  stdout=stdout,
@@ -48,7 +43,6 @@ class SecurityMonkey(Monkey):
         if not self.result_count:
             logger.info('Security run done. Check report')
             self.complete_run()
-        runner.close()
 
     def complete_run(self):
         report_path = self.config.get('security', 'report_path')

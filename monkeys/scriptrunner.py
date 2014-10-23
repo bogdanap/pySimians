@@ -10,7 +10,8 @@ class ScriptRunner(object):
     self.client = paramiko.SSHClient()
     self.client.set_missing_host_key_policy(
           paramiko.AutoAddPolicy())
-    self.client.connect(self.host, username=username, password=password, key_filename=key_filename)
+    self.client.connect(self.host, username=username,
+                        password=password, key_filename=key_filename)
     self.ftp = self.client.open_sftp()
 
   def run(self, command):

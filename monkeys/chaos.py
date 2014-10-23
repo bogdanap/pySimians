@@ -3,10 +3,10 @@ import logging
 import os.path
 import random
 
-from scriptrunner import ScriptRunner
 from supermonkey import Monkey
 
 logger = logging.getLogger('chaos')
+
 
 class ChaosMonkey(Monkey):
 
@@ -28,11 +28,7 @@ class ChaosMonkey(Monkey):
         logger.info("Selected random script: '%s'" % chaos)
         vm = random.choice(self.get_all_ips())
         logger.info("Selected random machine '%s'" % vm)
-        runner = ScriptRunner(vm)
-        runner.connect(username=self.username, password=self.password,
-                       key_filename=self.key_filename)
-        runner.run_file(chaos_script)
-        runner.close()
+        self.run_script_on_host(vm, chaos_script)
         self.tweet("Haha! Just ran '%s' on '%s'." % (chaos, vm))
         logger.info("Ran '%s' on '%s'." % (chaos, vm))
         self.last_run = datetime.datetime.now()
