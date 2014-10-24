@@ -28,10 +28,13 @@ class ChaosMonkey(Monkey):
         logger.info("Selected random script: '%s'" % chaos)
         vm = random.choice(self.get_all_ips())
         logger.info("Selected random machine '%s'" % vm)
-        self.run_script_on_host(vm, chaos_script)
-        self.tweet("Haha! Just ran '%s' on '%s'." % (chaos, vm))
-        logger.info("Ran '%s' on '%s'." % (chaos, vm))
-        self.last_run = datetime.datetime.now()
+        ret_code, _, stderr = self.run_script_on_host(vm, chaos_script)
+        if ret_code == 0:
+            self.tweet("Haha! Just ran '%s' on '%s'." % (chaos, vm))
+            logger.info("Ran '%s' on '%s'." % (chaos, vm))
+            self.last_run = datetime.datetime.now()
+        else:
+            logger.info(stderr)
 
     def should_run(self):
         cooloff = int(self.config.get("chaos", "cooloff"))
