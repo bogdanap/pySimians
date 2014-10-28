@@ -19,10 +19,13 @@ class ScriptRunner(object):
     stdin.close()
     return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
 
-  def run_file(self, file_path):
+  def run_file(self, file_path, daemonize=False):
     filename = os.path.basename(file_path)
     self.ftp.put(file_path, filename)
-    stdin, stdout, stderr = self.client.exec_command("sh %s" % filename)
+    command = "sudo sh %s" % filename
+    if daemonize:
+        command = "nohup " + command + ">& /dev/null < /dev/null &"
+    stdin, stdout, stderr = self.client.exec_command(command)
     self.ftp.remove(filename)
     return stdout.channel.recv_exit_status(), stdout.read(), stderr.read()
 

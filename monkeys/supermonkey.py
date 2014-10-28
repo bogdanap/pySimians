@@ -62,10 +62,10 @@ class SuperMonkey(object):
         return [os.path.join(script_dir, f) for f in os.listdir(script_dir)
                 if os.path.isfile(os.path.join(script_dir, f))]
 
-    def run_script_on_host(self, host, script):
+    def run_script_on_host(self, host, script, daemonize=False):
       runner = ScriptRunner(host)
       runner.connect(**dict(self.get_vm_credentials()))
-      return_code, stdout, stderr = runner.run_file(script)
+      return_code, stdout, stderr = runner.run_file(script, daemonize)
       runner.close()
       return return_code, stdout, stderr
 
